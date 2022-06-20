@@ -40,7 +40,10 @@
       <td><a title="{{ $user->name }}">{{ $user->name }}</a></td>
       <td><a title="{{ $user->username }}">{{ $user->username }}</a></td>
       <td>{{ $user->email }}</td>
-      <td>@if ($user->image > 0) <img width="100px" src="/{{ $user->image }}" alt="{{ $user->image }}"> @endif</td>
+      <td>
+         <img width="100px" src="/{{$user->image }}" alt="{{ $user->image }}"> 
+      </td>
+      {{-- <td>{{ $user->image }}</td> --}}
       <td>@if($user->is_active == 0) No @else Yes @endif </td>
       <td>{{ $user->role }}</td>
       <td><a href="/users/edit/{{ $user->id }}">Edit</a> | <a
@@ -50,5 +53,6 @@
     </tr>
     @endforeach
 </table>
+{{ $users->links() }}
 
 @stop

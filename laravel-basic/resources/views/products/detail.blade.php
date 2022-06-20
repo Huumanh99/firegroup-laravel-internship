@@ -15,7 +15,7 @@
   <li>Quantity: {{ $product[0]->quantity }}</li>
   <li>Image: {{ $product[0]->image }}</li>
   <li>Price: {{$product[0]->price }}</li>
-  <li>Actived: {{$product[0]->is_active }}</li>
+  <li>Status: {{$product[0]->status }}</li>
   <li>UserID: {{$product[0]->user_id }}</li>
   <li>CategoryID: {{$product[0]->category_id }}</li>
   

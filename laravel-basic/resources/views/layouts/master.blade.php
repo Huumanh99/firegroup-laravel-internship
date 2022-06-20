@@ -37,22 +37,22 @@
                 </li>
                 <li><a href="#">Page 2</a></li>
             </ul>
-        
+
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-user">Hi</span></a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-log-in"></span></a></li>
             </ul>
-   
+
         </div>
     </nav>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3">
-                <a href="/products"
-                    class="list-group-item @if (isset($currentPage) && $currentPage == 'products') active @endif">Products
-                    Management</a>
                 <a href="/users"
                     class="list-group-item @if (isset($currentPage) && $currentPage == 'users') active @endif">Users
+                    Management</a>
+                <a href="/products"
+                    class="list-group-item @if (isset($currentPage) && $currentPage == 'products') active @endif">Products
                     Management</a>
             </div>
             <div class="col-sm-9">

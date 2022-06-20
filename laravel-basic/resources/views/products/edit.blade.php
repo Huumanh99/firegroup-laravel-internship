@@ -39,10 +39,13 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="control-label col-sm-2" for="Active">Is_active <span class="text-danger">(*)</span>:</label>
+    <label class="control-label col-sm-2" for="status">Status <span class="text-danger">(*)</span>:</label>
     <div class="col-sm-6">
-      <label class="radio-inline"><input type="radio" name="is_active" value="1" checked>Yes</label>
-      <label class="radio-inline"><input type="radio" name="is_active" value="0">No</label>
+      <select name="status" class="form-control" id="status">
+        <option value="pending">Pending</option>
+        <option value="approve">Approve</option>
+        <option value="reject">Reject</option>
+      </select>
     </div>
   </div>
   <div class="form-group">

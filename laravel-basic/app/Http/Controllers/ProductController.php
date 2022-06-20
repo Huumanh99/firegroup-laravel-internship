@@ -9,7 +9,6 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        //List of products
         $queyProducts = DB::table('products')
             ->join('users', 'products.user_id', '=', 'users.id')
             ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
@@ -21,8 +20,8 @@ class ProductController extends Controller
             $queyProducts->where('products.title', 'like', '%' . $title . '%');
         }
 
-        $products = $queyProducts->get();
-        
+        $products = $queyProducts->paginate(5);
+
         return view(
             'products.list',
             [
@@ -45,19 +44,20 @@ class ProductController extends Controller
 
     public function createProduct(Request $request)
     {
-        $imageURL = "";
-        if ($request->hasFile('images')) {
-            $imageName = strtolower(time() . '.' . $request->image->getClientOriginalName());
-            $request->image->move(public_path('images'), $imageName);
-            $imageURL = "images/" . $imageName;
-        }
+        $imageName = "";
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+        $imageURL = "images/" . $imageName;
 
         DB::table('products')->insert(
             [
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
                 'quantity' => $request->input('quantity'),
-                'is_active' => $request->input('is_active'),
+                'status' => $request->input('status'),
                 'image' => $imageURL,
                 'user_id' => $request->input('user_id'),
                 'category_id' => $request->input('category_id'),
@@ -84,22 +84,22 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         // TODO: check uploaded image
-        $imageURL = "";
-        if ($request->hasFile('images')) {
-            $imageName = strtolower(time() . '.' . $request->image->getClientOriginalName());
-            $request->image->move(public_path('images'), $imageName);
-            $imageURL = "images/" . $imageName;
-        }
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+        $imageURL = "images/" . $imageName;
+        $userData['image'] = $imageURL;
 
         DB::table('products')->where('id', $id)
             ->update(
                 [
-
                     'user_id' => $request->input('user_id'),
                     'title' => $request->input('title'),
                     'description' => $request->input('description'),
                     'quantity' => $request->input('quantity'),
-                    'is_active' => $request->input('is_active'),
+                    'status' => $request->input('status'),
                     // TODO: check uploaded image
                     'image' => $imageURL,
                     'category_id' => $request->input('category_id'),
@@ -136,5 +136,29 @@ class ProductController extends Controller
             $products = [];
         }
         return  response()->json($products);
+    }
+    public function fitter(Request $request)
+    {
+        if ($request->keyword === 'pending') {
+            $pending = DB::table('products')->where('status', '=', $request->keyword)->get();
+            return response()->json([
+                'code' => 200,
+                'keyword' => $pending,
+            ]);
+        }
+        if ($request->keyword === 'approve') {
+            $approve = DB::table('products')->where('status', '=', $request->keyword)->get();
+            return response()->json([
+                'code' => 200,
+                'keyword' => $approve,
+            ]);
+        }
+        if ($request->keyword === 'reject') {
+            $reject = DB::table('products')->where('status', '=', $request->keyword)->get();
+            return response()->json([
+                'code' => 200,
+                'keyword' => $reject,
+            ]);
+        }
     }
 }

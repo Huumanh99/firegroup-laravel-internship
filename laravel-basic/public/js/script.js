@@ -1,36 +1,15 @@
 //validate login
 $(document).ready(function () {
-    $("#loginForm").validate({
-        rules: {
-            email: {
-                required: true,
-                email: true,
-                maxlength: 50
-            },
-            password: {
-                required: true,
-                minlength: 5
-            },
-        },
-        messages: {
-            email: {
-                required: "Email is required",
-                email: "Email must be a valid email address",
-                maxlength: "Email cannot be more than 50 characters",
-            },
-            password: {
-                required: "Password is required",
-                minlength: "Password must be at least 5 characters"
-            },
-        }
-    });
-
     //validate createUser
     $("#createForm").validate({
         rules: {
             name: {
                 required: true,
                 maxlength: 20
+            },
+            username: {
+                required: true,
+                maxlength: 30
             },
             email: {
                 required: true,
@@ -47,6 +26,10 @@ $(document).ready(function () {
             name: {
                 required: "Name is required",
                 maxlength: "Name cannot be more than 20 characters"
+            },
+            username: {
+                required: "username is required",
+                maxlength: "username cannot be more than 30 characters"
             },
             email: {
                 required: "Email is required",
@@ -80,7 +63,7 @@ $(document).ready(function () {
             }
         });
     });
-    
+
     //Validate createProducts
     $("#create-product").validate({
         rules: {
@@ -99,7 +82,11 @@ $(document).ready(function () {
             },
             price: {
                 required: true,
-                minlength: 2
+                maxlength: 10
+            },
+            quantity: {
+                required: true,
+                maxlength: 10
             },
         },
         messages: {
@@ -119,7 +106,11 @@ $(document).ready(function () {
             },
             price: {
                 required: "price is required",
-                minlength: "price must be at least 2 characters"
+                maxlength: "price cannot be more than 20 characters"
+            },
+            quantiy: {
+                required: "quantiy is required",
+                maxlength: "quantiy cannot be more than 20 characters"
             },
         }
     });
@@ -145,4 +136,85 @@ $(document).ready(function () {
             }
         });
     });
+
 });
+
+//Loc status pending/approve/rejects
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+function pending(pending) {
+  var pending = pending;
+  $.ajax({ 
+        type:'Post',
+        dataType: 'JSON',
+        data:{pending},
+        url: 'products/fitter/'+pending,
+        success: function(result) {
+          var html =''
+          result.keyword.forEach(element => {
+            html += '<tr><td>'+element.id +'</td>'
+            html += '<td>'+element.title +'</td>'
+            html += '<td>'+element.description +'</td>'
+            html += '<td>'+element.quantity +'</td>'
+            html += '<td>'+element.image +'</td>'
+            html += '<td>'+element.price +'</td>'
+            html += '<td>'+element.status +'</td></tr>'
+          });
+          console.log(html);
+          $('#list_products').html(html)
+        } 
+  });
+}
+
+function approve(approve) {
+  var approve = approve;
+  $.ajax({ 
+        type:'Post',
+        dataType: 'JSON',
+        data:{approve},
+        url: 'products/fitter/'+approve,
+        succsess: function(result) {
+          console.log();
+          var html =''
+          result.keyword.forEach(element => {
+            html += '<tr><td>'+element.id +'</td>'
+            html += '<td>'+element.title +'</td>'
+            html += '<td>'+element.description +'</td>'
+            html += '<td>'+element.quantity +'</td>'
+            html += '<td>'+element.image +'</td>'
+            html += '<td>'+element.price +'</td>'
+            html += '<td>'+element.status +'</td></tr>'  
+          });
+            console.log(html);
+            $('#list_products').html(html)
+        } 
+  });
+}
+
+function reject(reject) {
+  var reject = reject;
+  $.ajax({ 
+        type:'Post',
+        dataType: 'JSON',
+        data:{reject},
+        url: 'products/'+reject,
+        succsess: function(result) {
+          console.log();
+            var html =''
+            result.keyword.forEach(element => {
+            html += '<tr><td>'+element.id +'</td>'
+            html += '<td>'+element.title +'</td>'
+            html += '<td>'+element.description +'</td>'
+            html += '<td>'+element.quantity +'</td>'
+            html += '<td>'+element.image +'</td>'
+            html += '<td>'+element.price +'</td>'
+            html += '<td>'+element.status +'</td></tr>'
+            });
+            console.log(html);
+            $('#list_products').html(html)
+        } 
+  });
+}

@@ -22,7 +22,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2" for="Quantity">Quantity <span class="text-danger">(*)</span>:</label>
     <div class="col-sm-6">
-      <input type="text" name="quantity" class="form-control" id="quantity" placeholder="Enter quantity">
+      <input type="number" name="quantity" class="form-control" id="quantity" placeholder="Enter quantity">
     </div>
   </div>
   <div class="form-group">
@@ -34,14 +34,17 @@
   <div class="form-group">
     <label class="control-label col-sm-2" for="Price">Price <span class="text-danger">(*)</span>:</label>
     <div class="col-sm-6">
-      <input type="text" name="price" class="form-control" id="price" placeholder="Enter price">
+      <input type="number" name="price" class="form-control" id="price" placeholder="Enter price">
     </div>
   </div>
   <div class="form-group">
-    <label class="control-label col-sm-2" for="Active">Is_active <span class="text-danger">(*)</span>:</label>
+    <label class="control-label col-sm-2" for="status">Status <span class="text-danger">(*)</span>:</label>
     <div class="col-sm-6">
-      <label class="radio-inline"><input type="radio" name="is_active" value="1" checked>Yes</label>
-      <label class="radio-inline"><input type="radio" name="is_active" value="0">No</label>
+      <select name="status" class="form-control" id="status">
+        <option value="pending">Pending</option>
+        <option value="approve">Approve</option>
+        <option value="reject">Reject</option>
+      </select>
     </div>
   </div>
   <div class="form-group">

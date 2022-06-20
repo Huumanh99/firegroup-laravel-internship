@@ -41,3 +41,6 @@ Route::get('/products/detail/{id}', [ProductController::class, 'detail']);
 
 Route::get('/products/search', [ProductController::class, 'search']);
 Route::get('/products/detail/{id}', [ProductController::class, 'detail']);
+Route::post('/products/fitter/{keyword}', [ProductController::class, 'fitter']);
+// Route::post('/products/{approve}', [ProductController::class, 'fitter']);
+// Route::post('/products/{reject}', [ProductController::class, 'fitter']);

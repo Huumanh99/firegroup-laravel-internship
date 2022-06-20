@@ -27,7 +27,7 @@ class UserController extends Controller
             $queryUsers->orderBy('role', $sortrole)->get();
         }
 
-        $users =  $queryUsers->get();
+        $users =  $queryUsers->paginate(5); //->get();
 
         return view('users.list', [
             'users' => $users,
@@ -47,13 +47,13 @@ class UserController extends Controller
 
     public function createUser(Request $request)
     {
-        // check uploaded image
-        $imageURL = "";
-        if ($request->hasFile('image')) {
-            $imageName = strtolower(time() . '.' . $request->image->getClientOriginalName());
-            $request->image->move(public_path('images'), $imageName);
-            $imageURL = "images/" . $imageName;
-        }
+        $imageName = "";
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+        $imageURL = "images/" . $imageName;
 
         DB::table('users')->insert(
             [
@@ -86,6 +86,24 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+        if(!$request->input('image')){
+            $_SESSION['mesage'] = 'Please input image';   
+        }
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+        $imageURL = "images/" . $imageName;
+        $userData['image'] = $imageURL;
+ 
+
+        // check input password
+        $password = trim($request->input('password'));
+        if (strlen($password) > 0) {
+            $userData['password'] = bcrypt($password);
+        }
+
         $userData = [
             'name' => $request->input('name'),
             'username' => $request->input('username'),
@@ -93,20 +111,6 @@ class UserController extends Controller
             'role' => $request->input('role'),
             'is_active' => $request->input('is_active'),
         ];
-
-        // check uploaded image
-        if ($request->hasFile('image')) {
-            $imageName = strtolower(time() . '.' . $request->image->getClientOriginalName());
-            $request->image->move(public_path('images'), $imageName);
-            $imageURL = "images/" . $imageName;
-            $userData['image'] = $imageURL;
-        }
-
-        // check input password
-        $password = trim($request->input('password'));
-        if (strlen($password) > 0) {
-            $userData['password'] = bcrypt($password);
-        }
 
         DB::table('users')->where('id', $id)->update($userData);
 

@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->smallInteger('quantity')->default(0);
             $table->string('image')->nullable();
             $table->decimal('price', 10, 2);
-            $table->boolean('is_active')->default(true);
+            $table->enum('status', ['Pending', 'Approve', 'Reject']);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('category_id')->nullable();
