@@ -5,6 +5,9 @@
 @section('content')
 
 <h2>Create user</h2>
+@if(Session::has('error'))
+  <div class="alert alert-success" id='error'>{{Session::get('error') }}</div>
+@endif
 <form action="/users/create-user" method="post" enctype="multipart/form-data" class="form-horizontal" id="createForm">
   {{ csrf_field()}}
   <div class="form-group">
@@ -59,5 +62,7 @@
     </div>
   </div>
 </form>
+<script>
 
+</script>
 @stop

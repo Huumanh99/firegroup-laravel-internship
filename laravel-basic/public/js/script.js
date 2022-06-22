@@ -148,7 +148,7 @@ $.ajaxSetup({
 function pending(pending) {
   var pending = pending;
   $.ajax({ 
-        type:'Post',
+        type:'post',
         dataType: 'JSON',
         data:{pending},
         url: 'products/fitter/'+pending,

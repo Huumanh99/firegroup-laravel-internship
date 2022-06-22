@@ -5,6 +5,9 @@
 @section('content')
 
 <h2>Create product</h2>
+@if(Session::has('error'))
+  <div class="alert alert-success" id='error'>{{Session::get('error') }}</div>
+@endif
 <form action="/products/create-product" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-product">
   {{ csrf_field()}}
   <div class="form-group">

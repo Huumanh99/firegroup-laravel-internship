@@ -1,0 +1,5 @@
+id,name,username,email,email_verified_at,image,role,is_active,created_at,updated_at
+1,manhNguyen123,"Huu Manh",nguyenhuumanhit@gmail.co,,images/hinh1.jpg.jfif,admin,1,2022-06-17T17:00:24.000000Z,2022-06-22T09:14:01.000000Z
+2,Anna,NguyenAnna,nguyenan@gmail.com,,images/1655795333.jpg,admin,1,2022-06-17T17:01:56.000000Z,2022-06-21T14:08:53.000000Z
+3,Dori,Nguyendori,nguyendori@gmail.com,,images/1655795862.jpg,admin,1,2022-06-17T17:40:01.000000Z,2022-06-21T14:17:42.000000Z
+4,Donal,Nguyendonal,nguyendonal@gmail.com,,images/1655795325.jpg,admin,1,2022-06-19T11:24:44.000000Z,2022-06-21T14:08:45.000000Z
