@@ -29,7 +29,8 @@
   <div class="form-group">
     <label class="control-label col-sm-2" for="Image">Image <span class="text-danger">(*)</span>:</label>
     <div class="col-sm-6">
-      <input type="file" name="image" value="{{ $product[0]->image }}">
+      <input type="file" name="image" class="form-control"  placeholder="image">
+      <img src="/{{ $product[0]->image }}" width="300px">
     </div>
   </div>
   <div class="form-group">

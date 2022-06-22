@@ -1,9 +1,13 @@
 <?php
 
+use function Symfony\Component\String\s;
+
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -47,10 +51,19 @@ class UserController extends Controller
 
     public function createUser(Request $request)
     {
-        $imageName = "";
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name' =>  'required',
+            'username' =>  'required|unique:users',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:5',
         ]);
+
+        if ($validator->fails()) {
+            $_SESSION['mesage'] = "Vui long nhap du cac truong";
+            return redirect()->route("createUser");
+        }
+        $imageName = "";
         $imageName = time() . '.' . $request->image->extension();
         $request->image->move(public_path('images'), $imageName);
         $imageURL = "images/" . $imageName;
@@ -86,25 +99,20 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        if(!$request->input('image')){
-            $_SESSION['mesage'] = 'Please input image';   
-        }
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-        $imageName = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('images'), $imageName);
-        $imageURL = "images/" . $imageName;
-        $userData['image'] = $imageURL;
- 
+        $user = User::find($id);
+        $imageUser = $user->image;
 
-        // check input password
-        $password = trim($request->input('password'));
-        if (strlen($password) > 0) {
-            $userData['password'] = bcrypt($password);
+        $imageURL = "";
+        if ($_FILES['image']['name'] != "") {
+            $imageUser = $_FILES['image']['name'];
+            $request->image->move(public_path('images'), $imageUser);
+            $imageURL = "images/" . $imageUser;
+        } else {
+            $imageURL =  $imageUser;
         }
 
         $userData = [
+            'image' => $imageURL,
             'name' => $request->input('name'),
             'username' => $request->input('username'),
             'email' => $request->input('email'),

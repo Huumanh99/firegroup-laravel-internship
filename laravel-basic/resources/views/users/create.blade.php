@@ -5,31 +5,30 @@
 @section('content')
 
 <h2>Create user</h2>
-<form action="/users/create-user" method="post" enctype="multipart/form-data" class="form-horizontal"
-  id="createForm">
+<form action="/users/create-user" method="post" enctype="multipart/form-data" class="form-horizontal" id="createForm">
   {{ csrf_field()}}
   <div class="form-group">
     <label class="control-label col-sm-2" for="name">Name <span class="text-danger">(*)</span>:</label>
     <div class="col-sm-6">
-      <input type="text" name="name" class="form-control" id="name" placeholder="Enter name">
+      <input type="text" name="name" class="form-control" id="name" placeholder="Enter name" required>
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-sm-2" for="name">Username <span class="text-danger">(*)</span>:</label>
     <div class="col-sm-6">
-      <input type="text" name="username" class="form-control" id="username" placeholder="Enter username">
+      <input type="text" name="username" class="form-control" id="username" placeholder="Enter username" required>
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-sm-2" for="email">Email <span class="text-danger">(*)</span>:</label>
     <div class="col-sm-6">
-      <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
+      <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-sm-2" for="Password">Password <span class="text-danger">(*)</span>:</label>
     <div class="col-sm-6">
-      <input type="password" name="password" class="form-control" id="password" placeholder="Enter password">
+      <input type="password" name="password" class="form-control" id="password" placeholder="Enter password" required>
     </div>
   </div>
   <div class="form-group">
@@ -44,7 +43,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2" for="Image">Image:</label>
     <div class="col-sm-6">
-      <input type="file" name="image">
+      <input type="file" name="image" required>
     </div>
   </div>
   <div class="form-group">
@@ -62,4 +61,3 @@
 </form>
 
 @stop
-
