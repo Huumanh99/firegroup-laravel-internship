@@ -5,8 +5,7 @@
 @section('content')
 
 <h2>Edit user</h2>
-<form action="/users/update/{{ $user[0]->id }}" method="post" enctype="multipart/form-data"
-  class="form-horizontal">
+<form action="/users/update/{{ $user[0]->id }}" method="post" enctype="multipart/form-data" class="form-horizontal">
   {{ csrf_field()}}
   <div class="form-group">
     <label class="control-label col-sm-2" for="Name">Name (*):</label>
@@ -44,7 +43,9 @@
   <div class="form-group">
     <label class="control-label col-sm-2" for="Image">Image:</label>
     <div class="col-sm-6">
-      <input type="file" name="image" value="">
+      <input type="file" name="image" class="form-control"  placeholder="image">
+      {{-- <input type="file" name="image_cu" class="form-control" value = "{{ $user[0]->image }}" placeholder="image"> --}}
+      <img src="/{{ $user[0]->image }}" width="300px">
     </div>
   </div>
   <div class="form-group">

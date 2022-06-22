@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -44,10 +46,19 @@ class ProductController extends Controller
 
     public function createProduct(Request $request)
     {
-        $imageName = "";
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'description' =>  'required',
+            'title' =>  'required',
+            'price' => 'required',
+            'quantity' => 'required',
         ]);
+
+        if ($validator->fails()) {
+            $_SESSION['mesage'] = "Vui long nhap du cac truong";
+            return redirect()->route("createProduct");
+        }
+        $imageName = "";
         $imageName = time() . '.' . $request->image->extension();
         $request->image->move(public_path('images'), $imageName);
         $imageURL = "images/" . $imageName;
@@ -84,13 +95,17 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         // TODO: check uploaded image
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-        $imageName = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('images'), $imageName);
-        $imageURL = "images/" . $imageName;
-        $userData['image'] = $imageURL;
+        $user = Product::find($id);
+        $imageUser = $user->image;
+
+        $imageURL = "";
+        if ($_FILES['image']['name'] != "") {
+            $imageUser = $_FILES['image']['name'];
+            $request->image->move(public_path('images'), $imageUser);
+            $imageURL = "images/" . $imageUser;
+        } else {
+            $imageURL =  $imageUser;
+        }
 
         DB::table('products')->where('id', $id)
             ->update(

@@ -20,6 +20,7 @@
   <a value="approve" id="ap" class="btn btn-primary" onclick="pending('approve')">Approve</a>
   <a value="reject" id="re" class="btn btn-primary" onclick="pending('reject')">Reject</a>
 </div>
+
 <table class="table">
   <thead class="thead-dark">
     <tr>
