@@ -1,0 +1,15 @@
+id,name,username,email,email_verified_at,image,role,is_active,created_at,updated_at
+1,manhNguyen123,"Huu Manh",nguyenhuumanhit@gmail.co,,images/hinh1.jpg.jfif,admin,1,2022-06-17T17:00:24.000000Z,2022-06-22T09:14:01.000000Z
+2,Anna,NguyenAnna,nguyenan@gmail.com,,images/1655795333.jpg,admin,1,2022-06-17T17:01:56.000000Z,2022-06-21T14:08:53.000000Z
+3,Dori,Nguyendori,nguyendori@gmail.com,,images/1655795862.jpg,admin,1,2022-06-17T17:40:01.000000Z,2022-06-21T14:17:42.000000Z
+4,Donal,Nguyendonal,nguyendonal@gmail.com,,images/1655795325.jpg,admin,1,2022-06-19T11:24:44.000000Z,2022-06-21T14:08:45.000000Z
+8,Dori,Dori,Dori@gmail.com,,images/1655703680.jpg,admin,1,2022-06-19T11:27:13.000000Z,2022-06-20T12:41:20.000000Z
+9,Linda,LindaNguyen,nguyenhuumanhit@gmail.com,,images/1655791252.jpg,admin,1,2022-06-19T23:05:22.000000Z,2022-06-21T13:06:14.000000Z
+15,Mr.Chan,Mr.Chan,nguyenhuumanhit1@gmail.com,,images/1655791252.jpg,admin,1,2022-06-19T23:25:42.000000Z,2022-06-21T13:06:39.000000Z
+16,abc,Mr.abc,abc@gmail.com,,images/1655703691.jpg,admin,1,2022-06-20T06:56:21.000000Z,2022-06-20T12:41:31.000000Z
+18,San,NguyenSan,NguyenSan@gmail.com,,images/1655791252.jpg,admin,0,2022-06-20T07:33:43.000000Z,2022-06-21T13:08:19.000000Z
+19,Susu,Susu,Susu@gmail.com,,images/1655685470.jpg,admin,1,2022-06-20T07:37:50.000000Z,2022-06-20T07:37:50.000000Z
+20,asfsdaf,sadfsadf,afasdfsda@gmail.com,,images/1655699880.jpg,admin,1,2022-06-20T11:38:00.000000Z,2022-06-20T11:38:00.000000Z
+21,asfdsa,fsadfsd,sdfdasfsd@gmail.com,,images/1655700899.jpg,guest,1,2022-06-20T11:54:59.000000Z,2022-06-20T11:54:59.000000Z
+22,Hung,Dovanhung,Dovanhung@gmail.com,,images/1655714194.jpg,guest,1,2022-06-20T15:36:34.000000Z,2022-06-20T15:36:34.000000Z
+30,dcb,dcbnguyen,dcbnguyen@gmail.com,,images/1655864918.jpg,guest,1,2022-06-22T09:28:38.000000Z,2022-06-22T09:28:38.000000Z

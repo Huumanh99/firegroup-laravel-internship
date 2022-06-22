@@ -7,10 +7,28 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
+use function PHPUnit\Framework\returnSelf;
+
 class ProductController extends Controller
 {
     public function index(Request $request)
-    {
+    {   
+        $countStatus = DB::table('products')->get();
+       
+        $pending = 0;
+        $approve =0;
+        $reject = 0;
+        foreach ($countStatus as $count)
+        {
+            if($count->status === 'Pending'){
+                $pending ++;
+            } elseif ($count->status === 'Approve') {
+                $approve ++;
+            }else {
+                $reject ++;
+            }
+            
+        }
         $queyProducts = DB::table('products')
             ->join('users', 'products.user_id', '=', 'users.id')
             ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
@@ -27,6 +45,9 @@ class ProductController extends Controller
         return view(
             'products.list',
             [
+                'pending'=>$pending,
+                'approve' => $approve,
+                'reject' => $reject,
                 'title' => $title,
                 'products' => $products,
                 'currentPage' => 'products'
@@ -55,8 +76,8 @@ class ProductController extends Controller
         ]);
 
         if ($validator->fails()) {
-            $_SESSION['mesage'] = "Vui long nhap du cac truong";
-            return redirect()->route("createProduct");
+            session()->flash('error','Please enter the correct fields');
+          return redirect()->back();
         }
         $imageName = "";
         $imageName = time() . '.' . $request->image->extension();

@@ -5,6 +5,7 @@
 @section('content')
 
 <h2>Edit user</h2>
+
 <form action="/users/update/{{ $user[0]->id }}" method="post" enctype="multipart/form-data" class="form-horizontal">
   {{ csrf_field()}}
   <div class="form-group">

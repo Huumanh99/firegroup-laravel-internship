@@ -9,6 +9,7 @@
 
 <h2>List of Users</h2>
 <p><a href="/users/create" class="btn btn-primary">Create new user</a></p>
+<p><a href="/export" class="btn btn-primary">Export CSV</a></p>
 <div class="box-search">
   <form action="/users" method="get" id="seachForm">
     <div class="autocomplete" style="width:300px;">

@@ -16,9 +16,9 @@
     </div>
     <button type="submit">Tìm kiếm</button>
   </form>
-  <a value="pending" id="pd" class="btn btn-primary" onclick="pending('pending')">Pending</a>
-  <a value="approve" id="ap" class="btn btn-primary" onclick="pending('approve')">Approve</a>
-  <a value="reject" id="re" class="btn btn-primary" onclick="pending('reject')">Reject</a>
+  <a value="pending" id="pd" class="btn btn-primary" onclick="pending('pending')">Pending<sup>{{$pending}}</sup></a>
+  <a value="approve" id="ap" class="btn btn-primary" onclick="pending('approve')">Approve<sup>{{$approve}}</sup></a>
+  <a value="reject" id="re" class="btn btn-primary" onclick="pending('reject')">Reject<sup>{{$reject}}</sup></a>
 </div>
 
 <table class="table">

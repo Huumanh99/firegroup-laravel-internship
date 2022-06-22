@@ -27,8 +27,10 @@ Route::post('/users/update/{id}', [UserController::class, 'update']);
 Route::get('/users/delete/{id}', [UserController::class, 'delete']);
 Route::get('/users/detail/{id}', [UserController::class, 'detail']);
 
-Route::get('/users/search', [UserController::class, 'search']);
+//export
+Route::get('/export', [UserController::class, 'export'])->name('export');
 
+Route::get('/users/search', [UserController::class, 'search']);
 
 //Route products
 Route::get('/products', [ProductController::class, 'index'])->name('products');
