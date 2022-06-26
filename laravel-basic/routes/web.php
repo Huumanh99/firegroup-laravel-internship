@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,3 +45,4 @@ Route::get('/products/detail/{id}', [ProductController::class, 'detail']);
 Route::get('/products/search', [ProductController::class, 'search']);
 Route::get('/products/detail/{id}', [ProductController::class, 'detail']);
 Route::post('/products/fitter/{keyword}', [ProductController::class, 'fitter']);
+

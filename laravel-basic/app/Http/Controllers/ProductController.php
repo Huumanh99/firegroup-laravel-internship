@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -12,23 +13,11 @@ use function PHPUnit\Framework\returnSelf;
 class ProductController extends Controller
 {
     public function index(Request $request)
-    {   
-        $countStatus = DB::table('products')->get();
-       
-        $pending = 0;
-        $approve =0;
-        $reject = 0;
-        foreach ($countStatus as $count)
-        {
-            if($count->status === 'Pending'){
-                $pending ++;
-            } elseif ($count->status === 'Approve') {
-                $approve ++;
-            }else {
-                $reject ++;
-            }
-            
-        }
+    {
+        $countStatus = DB::table('products')
+                     ->select(DB::raw('count(*)'))
+                     ->groupBy('status')
+                     ->get();
         $queyProducts = DB::table('products')
             ->join('users', 'products.user_id', '=', 'users.id')
             ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
@@ -45,9 +34,7 @@ class ProductController extends Controller
         return view(
             'products.list',
             [
-                'pending'=>$pending,
-                'approve' => $approve,
-                'reject' => $reject,
+                'count' => $countStatus,
                 'title' => $title,
                 'products' => $products,
                 'currentPage' => 'products'
@@ -76,8 +63,8 @@ class ProductController extends Controller
         ]);
 
         if ($validator->fails()) {
-            session()->flash('error','Please enter the correct fields');
-          return redirect()->back();
+            session()->flash('error', 'Please enter the correct fields');
+            return redirect()->back();
         }
         $imageName = "";
         $imageName = time() . '.' . $request->image->extension();
