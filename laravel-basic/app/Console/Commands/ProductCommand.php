@@ -72,6 +72,6 @@ class ProductCommand extends Command
             }
 
             fclose($handle);
-        } while ($countUser <= $limit);
+        } while ($countUser == $limit);
     }
 }

@@ -16,11 +16,14 @@
     </div>
     <button type="submit">Tìm kiếm</button>
   </form>
-  {{$count}}
- 
-  {{-- <a value="pending" id="pd" class="btn btn-primary" onclick="pending('pending')">Pending<sup>{{$pending}}</sup></a>
-  <a value="approve" id="ap" class="btn btn-primary" onclick="pending('approve')">Approve<sup>{{$approve}}</sup></a>
-  <a value="reject" id="re" class="btn btn-primary" onclick="pending('reject')">Reject<sup>{{$reject}}</sup></a> --}}
+
+  @foreach ($count as $countStatus)
+  <a class="btn btn-primary"
+    onclick = "{{$countStatus->status}}('{{$countStatus->status}}')">{{$countStatus->status}}
+    <sup>{{$countStatus->stt}}</sup>
+  </a>
+  
+  @endforeach
 </div>
 <table class="table">
   <thead class="thead-dark">

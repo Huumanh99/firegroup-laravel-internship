@@ -15,9 +15,10 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $countStatus = DB::table('products')
-                     ->select(DB::raw('count(*)'))
+                     ->select(DB::raw('count(status) as stt, status'))
                      ->groupBy('status')
                      ->get();
+
         $queyProducts = DB::table('products')
             ->join('users', 'products.user_id', '=', 'users.id')
             ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
@@ -152,6 +153,7 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
+      
         $title = trim($request->input('title'));
         if (strlen($title) > 0) {
             $products = DB::table('products')->where('title', 'LIKE', '%' . $title . '%')->get('title');
@@ -162,21 +164,22 @@ class ProductController extends Controller
     }
     public function fitter(Request $request)
     {
-        if ($request->keyword === 'pending') {
+     
+        if ($request->keyword === 'Pending') {
             $pending = DB::table('products')->where('status', '=', $request->keyword)->get();
             return response()->json([
                 'code' => 200,
                 'keyword' => $pending,
             ]);
         }
-        if ($request->keyword === 'approve') {
+        if ($request->keyword === 'Approve') {
             $approve = DB::table('products')->where('status', '=', $request->keyword)->get();
             return response()->json([
                 'code' => 200,
                 'keyword' => $approve,
             ]);
         }
-        if ($request->keyword === 'reject') {
+        if ($request->keyword === 'Reject') {
             $reject = DB::table('products')->where('status', '=', $request->keyword)->get();
             return response()->json([
                 'code' => 200,
