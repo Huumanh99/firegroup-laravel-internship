@@ -37,17 +37,41 @@ class ProductCommand extends Command
      *
      * @return int
      */
+
     public function handle()
     {
-        $user = User::all()->toArray();
-        $filename = "logins.csv";
+        header("Content-type: text/csv");
+        header("Content-Disposition: attachment; filename=file.csv");
+        header("Pragma: no-cache");
+        header("Expires: 0");
 
-        $handle = fopen($filename, 'w');
-        fputcsv($handle, array_keys($user[0]));
+        $id = 0;
+        $i = 0;
+        $limit = 5;
 
-        foreach ($user as $row) {
-            fputcsv($handle, array($row['id'], $row['name']));
-        }
-        fclose($handle);
+        do {
+            $users = User::orderBy('id', 'asc')->where('id', '>', $id)->limit($limit)->get();
+            $countUser = $users->count();
+            $arr = $users->toArray();
+
+            if ($countUser == 0)
+                return;
+
+            $id = $arr[$countUser - 1]['id'];
+
+            $filename = "filename_" . ++$i . ".csv";
+
+            $columns = array('id', 'name', 'username', 'email', 'password', 'image', 'role', 'is_active', 'created_at', 'updated_at');
+
+            $handle = fopen($filename, 'w');
+
+            fputcsv($handle, $columns);
+
+            foreach ($arr as $value) {
+                fputcsv($handle, $value);
+            }
+
+            fclose($handle);
+        } while ($countUser == $limit);
     }
 }

@@ -159,7 +159,7 @@ class UserController extends Controller
     public function export()
     {
         $headers = [
-            'Cache-Control'      => 'must-revalidate, post-check=0, pre-check=0',
+            'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
             'Content-type'        => 'text/csv',
             'Content-Disposition' => 'attachment; filename=galleries.csv',
             'Expires'             => '0',

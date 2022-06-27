@@ -145,10 +145,10 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-function pending(pending) {
-  var pending = pending;
+function Pending(Pending) {
+  var pending = Pending;
   $.ajax({ 
-        type:'post',
+        type:'get',
         dataType: 'JSON',
         data:{pending},
         url: 'products/fitter/'+pending,
@@ -163,22 +163,20 @@ function pending(pending) {
             html += '<td>'+element.price +'</td>'
             html += '<td>'+element.status +'</td></tr>'
           });
-          console.log(html);
           $('#list_products').html(html)
         } 
   });
 }
 
-function approve(approve) {
-  var approve = approve;
+function Approve(Approve) {
+  var approve = Approve;
   $.ajax({ 
-        type:'Post',
+        type:'get',
         dataType: 'JSON',
         data:{approve},
         url: 'products/fitter/'+approve,
-        succsess: function(result) {
-          console.log();
-          var html =''
+        success: function(result) {
+            var html =''
           result.keyword.forEach(element => {
             html += '<tr><td>'+element.id +'</td>'
             html += '<td>'+element.title +'</td>'
@@ -186,25 +184,25 @@ function approve(approve) {
             html += '<td>'+element.quantity +'</td>'
             html += '<td>'+element.image +'</td>'
             html += '<td>'+element.price +'</td>'
-            html += '<td>'+element.status +'</td></tr>'  
+            html += '<td>'+element.status +'</td></tr>'
           });
-            console.log(html);
-            $('#list_products').html(html)
+         
+          $('#list_products').html(html)
         } 
   });
 }
 
-function reject(reject) {
-  var reject = reject;
+
+function Reject(Reject) {
+  var reject = Reject;
   $.ajax({ 
-        type:'Post',
+        type:'get',
         dataType: 'JSON',
         data:{reject},
-        url: 'products/'+reject,
-        succsess: function(result) {
-          console.log();
+        url: 'products/fitter/'+reject,
+        success: function(result) {
             var html =''
-            result.keyword.forEach(element => {
+          result.keyword.forEach(element => {
             html += '<tr><td>'+element.id +'</td>'
             html += '<td>'+element.title +'</td>'
             html += '<td>'+element.description +'</td>'
@@ -212,9 +210,8 @@ function reject(reject) {
             html += '<td>'+element.image +'</td>'
             html += '<td>'+element.price +'</td>'
             html += '<td>'+element.status +'</td></tr>'
-            });
-            console.log(html);
-            $('#list_products').html(html)
+          });
+          $('#list_products').html(html)
         } 
   });
 }
