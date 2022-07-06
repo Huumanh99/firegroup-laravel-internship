@@ -1,3 +1,6 @@
+# Login
+- Admin login: http://localhost/login
+
 # Users management
 - List of User: http://localhost/users
 - Create User: http://localhost/users/create
@@ -17,3 +20,11 @@
 - Seach Title of table Product
 - Filter status(Pending,Approve,Reject) of table Product
 - Pagination for table Product
+
+# Posts management
+- Crawl data page dantri(image,title,content,description)
+- List of Posts: http://localhost/posts
+- Edit Posts: http://localhost/posts/edit/{id}
+- View Posts: http://localhost/posts/detail/{id}
+- Detele Posts: http://localhost/posts/delete/{id}
+- Filter status(publish,unpublish) of table Posts

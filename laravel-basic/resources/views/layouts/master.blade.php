@@ -16,7 +16,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/admin-style.css') }}">
     <script type="text/javascript" src="{{ URL::asset('js/script.js') }}"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"  />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
@@ -45,6 +46,9 @@
                     Management</a>
                 <a href="/posts"
                     class="list-group-item @if (isset($currentPage) && $currentPage == 'posts') active @endif">Posts
+                    Management</a>
+                <a href="/shopifyName"
+                    class="list-group-item @if (isset($currentPage) && $currentPage == 'shopify') active @endif">Shopify
                     Management</a>
             </div>
             <div class="col-sm-9">

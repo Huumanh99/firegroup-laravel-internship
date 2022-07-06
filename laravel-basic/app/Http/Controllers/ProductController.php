@@ -12,16 +12,6 @@ use function PHPUnit\Framework\returnSelf;
 
 class ProductController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index(Request $request)
     {
         $authUser = auth()->user();
@@ -181,5 +171,10 @@ class ProductController extends Controller
             'code' => 200,
             'keyword' => $status,
         ]);
+    }
+
+    public function pageUser(Request $request)
+    {
+        return view('products.pageUser');
     }
 }

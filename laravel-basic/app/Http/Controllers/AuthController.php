@@ -30,17 +30,19 @@ class AuthController extends Controller
 
     public function authenticate(Request $request)
     {
-        $getRole = User::where('role', '=', 'admin')->get();
-        $getRole->toArray();
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-
-            return redirect()->route('users');
+            if (Auth::user()->role === 'admin') {
+                $request->session()->regenerate();
+                return redirect()->route('admin');
+            } else {
+                //handle login user
+                Auth::logout();
+            }
         }
 
         return back()->withErrors([

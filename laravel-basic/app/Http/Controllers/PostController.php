@@ -8,20 +8,9 @@ use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index(Request $request)
     {
         $authUser = auth()->user();
-
         $countStatus = DB::table('posts')
             ->select(DB::raw('count(status) as stt, status'))
             ->groupBy('status')
@@ -40,7 +29,6 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = DB::table('posts')->where('id', '=', $id)->get();
-
         return view(
             'posts.edit',
             [
