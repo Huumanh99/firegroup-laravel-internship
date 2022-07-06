@@ -12,12 +12,24 @@ use function PHPUnit\Framework\returnSelf;
 
 class ProductController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $request)
     {
+        $authUser = auth()->user();
+
         $countStatus = DB::table('products')
-                     ->select(DB::raw('count(status) as stt, status'))
-                     ->groupBy('status')
-                     ->get();
+            ->select(DB::raw('count(status) as stt, status'))
+            ->groupBy('status')
+            ->get();
 
         $queyProducts = DB::table('products')
             ->join('users', 'products.user_id', '=', 'users.id')
@@ -36,6 +48,7 @@ class ProductController extends Controller
             'products.list',
             [
                 'count' => $countStatus,
+                'authUser' => $authUser,
                 'title' => $title,
                 'products' => $products,
                 'currentPage' => 'products'
@@ -153,7 +166,6 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-      
         $title = trim($request->input('title'));
         if (strlen($title) > 0) {
             $products = DB::table('products')->where('title', 'LIKE', '%' . $title . '%')->get('title');
@@ -164,27 +176,10 @@ class ProductController extends Controller
     }
     public function fitter(Request $request)
     {
-     
-        if ($request->keyword === 'Pending') {
-            $pending = DB::table('products')->where('status', '=', $request->keyword)->get();
-            return response()->json([
-                'code' => 200,
-                'keyword' => $pending,
-            ]);
-        }
-        if ($request->keyword === 'Approve') {
-            $approve = DB::table('products')->where('status', '=', $request->keyword)->get();
-            return response()->json([
-                'code' => 200,
-                'keyword' => $approve,
-            ]);
-        }
-        if ($request->keyword === 'Reject') {
-            $reject = DB::table('products')->where('status', '=', $request->keyword)->get();
-            return response()->json([
-                'code' => 200,
-                'keyword' => $reject,
-            ]);
-        }
+        $status = DB::table('products')->where('status', '=', $request->keyword)->get();
+        return response()->json([
+            'code' => 200,
+            'keyword' => $status,
+        ]);
     }
 }

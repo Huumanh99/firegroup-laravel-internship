@@ -8,8 +8,8 @@
 @section('content')
 
 <h2>List of Users</h2>
-<p><a href="/users/create" class="btn btn-primary">Create new user</a></p>
-<p><a href="/export" class="btn btn-primary">Export CSV</a></p>
+<a href="/users/create" class="btn btn-primary">Create new user</a>
+<a href="/export" class="btn btn-primary">Export CSV</a>
 <div class="box-search">
   <form action="/users" method="get" id="seachForm">
     <div class="autocomplete" style="width:300px;">
@@ -44,7 +44,6 @@
       <td>
          <img width="100px" src="/{{$user->image }}" alt="{{ $user->image }}"> 
       </td>
-      {{-- <td>{{ $user->image }}</td> --}}
       <td>@if($user->is_active == 0) No @else Yes @endif </td>
       <td>{{ $user->role }}</td>
       <td><a href="/users/edit/{{ $user->id }}">Edit</a> | <a

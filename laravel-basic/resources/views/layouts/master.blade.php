@@ -16,33 +16,22 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/admin-style.css') }}">
     <script type="text/javascript" src="{{ URL::asset('js/script.js') }}"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"  />
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
     @yield('styles')
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Admin Panel</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span
-                            class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Page 1-1</a></li>
-                        <li><a href="#">Page 1-2</a></li>
-                        <li><a href="#">Page 1-3</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Page 2</a></li>
-            </ul>
-
+    <nav class="navbar navbar">
+        <div class="container">
+            @if (isset($authUser))
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user">Hi</span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hi {{ $authUser->name }} </a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
             </ul>
-
+            @endif
         </div>
     </nav>
     <div class="container-fluid">
@@ -53,6 +42,9 @@
                     Management</a>
                 <a href="/products"
                     class="list-group-item @if (isset($currentPage) && $currentPage == 'products') active @endif">Products
+                    Management</a>
+                <a href="/posts"
+                    class="list-group-item @if (isset($currentPage) && $currentPage == 'posts') active @endif">Posts
                     Management</a>
             </div>
             <div class="col-sm-9">

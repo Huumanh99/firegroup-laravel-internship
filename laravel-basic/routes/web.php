@@ -2,8 +2,12 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ShopifyController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Weidner\Goutte\GoutteFacade;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +20,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [UserController::class, 'index'])->name('users');
+// Route::get('/', [UserController::class, 'index'])->name('users');
+
+Route::get('/', [AuthController::class, 'login']);
 
 // Route Users
 Route::get('/users', [UserController::class, 'index'])->name('users');
@@ -44,5 +50,25 @@ Route::get('/products/detail/{id}', [ProductController::class, 'detail']);
 
 Route::get('/products/search', [ProductController::class, 'search']);
 Route::get('/products/detail/{id}', [ProductController::class, 'detail']);
-Route::get('/products/fitter/{keyword}', [ProductController::class, 'fitter']);
+Route::post('/products/fitter/{keyword}', [ProductController::class, 'fitter']);
 
+//Shopify
+Route::get('/shopify', [ShopifyController::class, 'shopify']);
+Route::get('/shopify/url', [ShopifyController::class, 'generateCode']);
+Route::get('/page', [ShopifyController::class, 'pageTest']);
+
+//Route Auth
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/authenticate', [AuthController::class, 'authenticate']);
+
+
+Route::get('/posts', [PostController::class, 'index'])->name('posts');
+Route::get('/posts/edit/{id}', [PostController::class, 'edit']);
+Route::post('/posts/update/{id}', [PostController::class, 'update']);
+Route::get('/posts/delete/{id}', [PostController::class, 'delete']);
+Route::get('/posts/detail/{id}', [PostController::class, 'detail']);
+
+Route::post('/posts/change-status', [PostController::class, 'changeStatus']);
+
+Route::post('/posts/fitter/{keyword}', [PostController::class, 'fitter']);

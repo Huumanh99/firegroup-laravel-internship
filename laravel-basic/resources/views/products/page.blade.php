@@ -7,6 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    Đây là trang User
+    <form action="/shopify" method="GET">
+        <label for="name">First name: </label>
+        <input type="text" id="name" name="name"><br><br>
+        <input type="submit" value="Submit">
+      </form> 
 </body>
 </html>

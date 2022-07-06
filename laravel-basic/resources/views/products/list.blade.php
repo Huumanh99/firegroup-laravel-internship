@@ -18,11 +18,10 @@
   </form>
 
   @foreach ($count as $countStatus)
-  <a class="btn btn-primary"
-    onclick = "{{$countStatus->status}}('{{$countStatus->status}}')">{{$countStatus->status}}
+  <a class="btn btn-primary" onclick="filterStatus('{{$countStatus->status}}')">{{$countStatus->status}}
     <sup>{{$countStatus->stt}}</sup>
   </a>
-  
+
   @endforeach
 </div>
 <table class="table">

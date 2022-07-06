@@ -12,8 +12,21 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+
+      /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $request)
     {
+        $authUser = auth()->user();
+
         $queryUsers = DB::table('users');
 
         // search by name
@@ -36,6 +49,7 @@ class UserController extends Controller
 
         return view('users.list', [
             'users' => $users,
+            'authUser' => $authUser,
             'name' => $name,
             'sortName' => $sortName == 'desc' ? 'asc' : 'desc',
             'sortrole' => $sortrole == 'desc' ? 'asc' : 'desc',
