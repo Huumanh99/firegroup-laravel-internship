@@ -70,6 +70,7 @@ class ProductController extends Controller
             session()->flash('error', 'Please enter the correct fields');
             return redirect()->back();
         }
+
         $imageName = "";
         $imageName = time() . '.' . $request->image->extension();
         $request->image->move(public_path('images'), $imageName);
