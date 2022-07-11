@@ -24,6 +24,14 @@ use Weidner\Goutte\GoutteFacade;
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/authenticate', [AuthController::class, 'authenticate']);
 
+//craete webhook
+Route::get('/webhook', [ShopifyController::class, 'webhook'])->name('webhook');
+
+//Queue 
+Route::get('/create', [ShopifyController::class, 'create']);
+
+Route::get('/getProduct', [ShopifyController::class, 'getProduct']);
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/', [UserController::class, 'index'])->name('admin');
@@ -58,7 +66,12 @@ Route::middleware(['auth'])->group(function () {
     //Shopify
     Route::get('/shopify', [ShopifyController::class, 'shopify']);
     Route::get('/shopify/url', [ShopifyController::class, 'generateCode']);
-    Route::get('/shopifyName', [ShopifyController::class, 'shopifyName']);
+    Route::get('/shopifyName', [ShopifyController::class, 'shopifyName'])->name('shopifyName');
+    Route::get('/shopify/edit/{id}', [ShopifyController::class, 'edit']);
+    Route::post('/shopify/update/{id}', [ShopifyController::class, 'update']);
+   
+    Route::get('/shopify/detail/{id}', [ShopifyController::class, 'detail']);
+    
 
     //Route Auth
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
