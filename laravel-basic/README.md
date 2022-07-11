@@ -1,5 +1,6 @@
 # Login
 - Admin login: http://localhost/login
+- Logout
 
 # Users management
 - List of User: http://localhost/users
