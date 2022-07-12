@@ -189,7 +189,6 @@ class ShopifyController extends Controller
     //Update Product on Shopify
     public function updateProductOnShopify(Request $request)
     {
-
         Productlist::where('id', '=', $request->input('id'))->update([
             'id' =>    $request->input('id'),
             'body_html' =>  $request->input('body_html'),

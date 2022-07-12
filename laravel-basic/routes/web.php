@@ -68,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/shopify/edit/{id}', [ShopifyController::class, 'editProductLocal']);
     Route::post('/shopify/update/{id}', [ShopifyController::class, 'updateProductLocal']);
     Route::get('/shopify/createShopify', [ShopifyController::class, 'createShopify']);
-    Route::post('/users/createProductShopify', [ShopifyController::class, 'createProductShopify']);
+    Route::post('/shopify/createProductLocal', [ShopifyController::class, 'createProductLocal']);
     Route::get('/shopify/detail/{id}', [ShopifyController::class, 'detail']);
     
 

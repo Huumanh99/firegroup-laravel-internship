@@ -8,7 +8,7 @@
 @if(Session::has('error'))
   <div class="alert alert-danger" id='error'>{{Session::get('error') }}</div>
 @endif
-<form action="/users/createProductShopify" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-product">
+<form action="/shopify/createProductLocal" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-product">
   {{ csrf_field()}}
   <div class="form-group">
     <label class="control-label col-sm-2" for="body_html">Body_html<span class="text-danger">(*)</span>:</label>
