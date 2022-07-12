@@ -29,14 +29,14 @@ Route::get('/webhook', [ShopifyController::class, 'webhook'])->name('webhook');
 
 //Queue 
 Route::get('/create', [ShopifyController::class, 'create']);
-
 Route::get('/getProduct', [ShopifyController::class, 'getProduct']);
 
 Route::middleware(['auth'])->group(function () {
 
+    //Route Users
     Route::get('/', [UserController::class, 'index'])->name('admin');
     Route::get('/users', [UserController::class, 'index'])->name('users');
-    // Route Users
+
     Route::get('/users/create', [UserController::class, 'create'])->name('createUser');
     Route::post('/users/create-user', [UserController::class, 'createUser']);
     Route::post('/users/add-image', [UserController::class, 'addImage']);
@@ -44,13 +44,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users/update/{id}', [UserController::class, 'update']);
     Route::get('/users/delete/{id}', [UserController::class, 'delete']);
     Route::get('/users/detail/{id}', [UserController::class, 'detail']);
-
-    //export
     Route::get('/export', [UserController::class, 'export'])->name('export');
-    //search 
     Route::get('/users/search', [UserController::class, 'search']);
 
-    //Route products
+
+    //Route Products
     Route::get('/products', [ProductController::class, 'index'])->name('products');
     Route::get('/products/create', [ProductController::class, 'create'])->name('createProduct');
     Route::post('/products/create-product', [ProductController::class, 'createProduct']);
@@ -58,31 +56,32 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/products/update/{id}', [ProductController::class, 'update']);
     Route::get('/products/delete/{id}', [ProductController::class, 'delete']);
     Route::get('/products/detail/{id}', [ProductController::class, 'detail']);
-
     Route::get('/products/search', [ProductController::class, 'search']);
     Route::get('/products/detail/{id}', [ProductController::class, 'detail']);
     Route::post('/products/fitter/{keyword}', [ProductController::class, 'fitter']);
 
-    //Shopify
+
+    //Route Shopify
     Route::get('/shopify', [ShopifyController::class, 'shopify']);
     Route::get('/shopify/url', [ShopifyController::class, 'generateCode']);
     Route::get('/shopifyName', [ShopifyController::class, 'shopifyName'])->name('shopifyName');
-    Route::get('/shopify/edit/{id}', [ShopifyController::class, 'edit']);
-    Route::post('/shopify/update/{id}', [ShopifyController::class, 'update']);
-   
+    Route::get('/shopify/edit/{id}', [ShopifyController::class, 'editProductLocal']);
+    Route::post('/shopify/update/{id}', [ShopifyController::class, 'updateProductLocal']);
+    Route::get('/shopify/createShopify', [ShopifyController::class, 'createShopify']);
+    Route::post('/users/createProductShopify', [ShopifyController::class, 'createProductShopify']);
     Route::get('/shopify/detail/{id}', [ShopifyController::class, 'detail']);
     
 
-    //Route Auth
+    //Route Logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+
+    //Route Posts
     Route::get('/posts', [PostController::class, 'index'])->name('posts');
     Route::get('/posts/edit/{id}', [PostController::class, 'edit']);
     Route::post('/posts/update/{id}', [PostController::class, 'update']);
     Route::get('/posts/delete/{id}', [PostController::class, 'delete']);
     Route::get('/posts/detail/{id}', [PostController::class, 'detail']);
-
     Route::post('/posts/change-status', [PostController::class, 'changeStatus']);
-
     Route::post('/posts/fitter/{keyword}', [PostController::class, 'fitter']);
 });
