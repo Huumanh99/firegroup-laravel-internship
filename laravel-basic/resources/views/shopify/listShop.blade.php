@@ -4,7 +4,8 @@
 
 @section('content')
 
-<h2>Please enter the name of the shop to search</h2>
+<h2>List of Shopify</h2>
+<p><a href="/shopify/createShopify" class="btn btn-primary">Create new products</a></p>
 <div class="box-search">
     <form action="/shopify" method="get">
         <label for="name">Shop name: </label>
@@ -12,6 +13,9 @@
         {{ csrf_field()}}
         <button type="submit" value="Submit">Submit</button>
     </form>
+</div>
+<div>
+  <a href="/api/createWebhook">createWebhook</a>
 </div>
 <table class="table">
     <thead class="thead-dark">
@@ -35,7 +39,7 @@
         <td><img width="100px" src="/{{$product->image }}" alt="{{ $product->image }}"> </td>
         <td>{{ $product->status }} </td>   
         <td><a href="/shopify/edit/{{ $product->id }}">Edit</a> | <a
-            href="/api/shopify/delete/{{ $product->id }}">Delete</a> | <a href="/shopify/detail/{{ $product->id }}">View</a>
+            href="/api/shopify/delete/{{ $product->id }}">Delete</a>
         </td>
       </tr>
       @endforeach

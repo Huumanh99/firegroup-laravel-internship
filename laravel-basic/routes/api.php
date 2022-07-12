@@ -19,14 +19,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/createProduct', [ShopifyController::class, 'createProduct']);
+//delete products on shopify
+Route::get('/deleteProductWebhook', [ShopifyController::class, 'deleteProductWebhook']);
+Route::post('/deletePr', [ShopifyController::class, 'deleteProductOnShopify']);
+
+//create products on shopify
+Route::post('/createProduct', [ShopifyController::class, 'createProductOnShopify']);
 Route::get('/createWebhook', [ShopifyController::class, 'createWebhook']);
 
+//update products on shopify
+Route::post('/updatePro', [ShopifyController::class, 'updateProductOnShopify']);
 Route::get('/updateProduct', [ShopifyController::class, 'updateProduct']);
-Route::post('/updatePro', [ShopifyController::class, 'updatePro']);
 
-Route::get('/deleteProductWebhook', [ShopifyController::class, 'deleteProductWebhook']);
-Route::post('/deletePr', [ShopifyController::class, 'deletePr']);
 
-//delete product shopify
-Route::get('/shopify/delete/{id}', [ShopifyController::class, 'delete']);
+//delete product local
+Route::get('/shopify/delete/{id}', [ShopifyController::class, 'deleteProducLocal']);

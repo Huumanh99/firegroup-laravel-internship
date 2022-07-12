@@ -14,6 +14,7 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
+        //Check auth login
         $authUser = auth()->user();
 
         $queryUsers = DB::table('users');
@@ -52,7 +53,7 @@ class UserController extends Controller
             'currentPage' => 'users'
         ]);
     }
-
+    
     public function createUser(Request $request)
     {
         $validator = Validator::make($request->all(), [
