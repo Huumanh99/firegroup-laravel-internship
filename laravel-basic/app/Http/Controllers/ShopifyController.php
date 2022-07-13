@@ -127,15 +127,15 @@ class ShopifyController extends Controller
         $topics = [
             'topic' => [
                 'nameTopic' => 'products/create',
-                'address' => 'https://12a0-113-161-32-170.ap.ngrok.io/api/createProductOnShopify'
+                'address' => 'https://b7b4-113-161-32-170.ap.ngrok.io/api/createProductOnShopify'
             ],
             'topic' => [
                 'nameTopic' => 'products/update',
-                'address' => 'https://12a0-113-161-32-170.ap.ngrok.io/api/updateProductOnShopify'
+                'address' => 'https://b7b4-113-161-32-170.ap.ngrok.io/api/updateProductOnShopify'
             ],
             ' topic' => [
                 'nameTopic' => 'products/delete',
-                'address' => 'https://12a0-113-161-32-170.ap.ngrok.io/api/deleteProductOnShopify'
+                'address' => 'https://b7b4-113-161-32-170.ap.ngrok.io/api/deleteProductOnShopify'
             ]
         ];
 
@@ -180,7 +180,7 @@ class ShopifyController extends Controller
                 'webhook' => [
                     'topic' => 'products/update',
                     'format' => 'json',
-                    'address' => 'https://12a0-113-161-32-170.ap.ngrok.io/api/updateProductOnShopify',
+                    'address' => 'https://b7b4-113-161-32-170.ap.ngrok.io/api/updateProductOnShopify',
                 ],
             ]
         ]);
@@ -211,7 +211,7 @@ class ShopifyController extends Controller
                 'webhook' => [
                     'topic' => 'products/delete',
                     'format' => 'json',
-                    'address' => 'https://12a0-113-161-32-170.ap.ngrok.io/api/deleteProductOnShopify',
+                    'address' => 'https://b7b4-113-161-32-170.ap.ngrok.io/api/deleteProductOnShopify',
                 ],
             ]
         ]);
@@ -261,24 +261,28 @@ class ShopifyController extends Controller
     public function updateProductLocal(Request $request, $id)
     {
         $client = new Client();
+
+        $data = [
+            'body_html' => $request->input('body_html'),
+            'handle' => $request->input('handle'),
+            'title' => $request->input('title'),
+            'status' => $request->input('status'),
+        ];
+        
         $url = 'https://manh-store123.myshopify.com/admin/api/2022-07/products/' . $id . '.json';
-        $client->request('GET', $url, [
+        $client->request('PUT', $url, [
             'headers' => [
                 'X-Shopify-Access-Token' => 'shpua_feb8882df2b643e3290aa807f7086636',
             ],
-        ]);
-
-        Productlist::find($id);
-        Productlist::where('id', '=', $id)
-            ->update(
-                [
-                    'body_html' => $request->input('body_html'),
-                    'title' => $request->input('title'),
-                    'handle' => $request->input('handle'),
-                    'status' => $request->input('status'),
-                    // 'image' => $request->input('image'),
+            'query' => [
+                'product' => [
+                    'title' => $data['title'],
+                    'handle' => $data['handle'],
+                    // 'status' => $data['status'],
+                    'body_html' => $data['body_html'],
                 ]
-            );
+            ]
+        ]);
 
         // Redirect to tasks url
         return redirect()->route('shopifyName');

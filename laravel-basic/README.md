@@ -29,3 +29,12 @@
 - View Posts: http://localhost/posts/detail/{id}
 - Detele Posts: http://localhost/posts/delete/{id}
 - Filter status(publish,unpublish) of table Posts
+
+#Shopify management
+- Create products on shopify:http://localhost/api/createProductOnShopify
+- Edit products on shopify:http://localhost/api/updateProductOnShopify
+- Delete products on shopify:http://localhost/api/deleteProductOnShopify
+
+- Create products on local:http://localhost/createProductLocal
+- Edit products on local:http://localhost/updateProductLocal
+- Delete products on local:http://localhost/api/deleteProducLocal

@@ -21,14 +21,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //delete products on shopify
 Route::get('/deleteProductWebhook', [ShopifyController::class, 'deleteProductWebhook']);
-Route::post('/deletePr', [ShopifyController::class, 'deleteProductOnShopify']);
+Route::post('/deleteProductOnShopify', [ShopifyController::class, 'deleteProductOnShopify']);
 
 //create products on shopify
-Route::post('/createProduct', [ShopifyController::class, 'createProductOnShopify']);
+Route::post('/createProductOnShopify', [ShopifyController::class, 'createProductOnShopify']);
 Route::get('/createWebhook', [ShopifyController::class, 'createWebhook']);
 
 //update products on shopify
-Route::post('/updatePro', [ShopifyController::class, 'updateProductOnShopify']);
+Route::post('/updateProductOnShopify', [ShopifyController::class, 'updateProductOnShopify']);
 Route::get('/updateProduct', [ShopifyController::class, 'updateProduct']);
 
 
