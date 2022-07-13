@@ -1,6 +1,6 @@
 # Login
 - Admin login: http://localhost/login
-- Logout
+- Logout: http://localhost/logout
 
 # Users management
 - List of User: http://localhost/users
@@ -30,7 +30,7 @@
 - Detele Posts: http://localhost/posts/delete/{id}
 - Filter status(publish,unpublish) of table Posts
 
-#Shopify management
+# Shopify management
 - Create products on shopify:http://localhost/api/createProductOnShopify
 - Edit products on shopify:http://localhost/api/updateProductOnShopify
 - Delete products on shopify:http://localhost/api/deleteProductOnShopify

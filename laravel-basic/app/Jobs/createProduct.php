@@ -34,7 +34,20 @@ class createProduct implements ShouldQueue
     public function handle()
     {
         $product = $this->request;
+
+        if ($product['image'] == null) {
+           $data = $this->image($product);
+        } else {
+          $dataImgae = $this->image($product);
+          $dataSrc = ['image'=> $product['image']['src']];
+          $data = array_merge($dataImgae, $dataSrc);
+        }
         
+      Productlist::create($data);
+    }
+
+    public function image($product){
+        $data = [];
         $data = [
             'id' =>   $product['id'],
             'body_html' => $product['body_html'],
@@ -42,6 +55,7 @@ class createProduct implements ShouldQueue
             'handle' => $product['handle'],
             'status' => $product['status'],
         ];
-        Productlist::create($data);
+
+        return $data;
     }
 }

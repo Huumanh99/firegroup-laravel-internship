@@ -24,7 +24,7 @@ Route::get('/deleteProductWebhook', [ShopifyController::class, 'deleteProductWeb
 Route::post('/deleteProductOnShopify', [ShopifyController::class, 'deleteProductOnShopify']);
 
 //create products on shopify
-Route::post('/createProductOnShopify', [ShopifyController::class, 'createProductOnShopify']);
+Route::any('/createProductOnShopify', [ShopifyController::class, 'createProductOnShopify']);
 Route::get('/createWebhook', [ShopifyController::class, 'createWebhook']);
 
 //update products on shopify

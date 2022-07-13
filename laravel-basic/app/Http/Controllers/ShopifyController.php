@@ -107,7 +107,7 @@ class ShopifyController extends Controller
                     'title' => $item->title,
                     'handle' => $item->handle,
                     'status' => $item->status,
-                    //  'image'=> $item->image,
+                    'image' => $item->image,
                 ];
 
                 Productlist::create($dataProduct);
@@ -125,22 +125,21 @@ class ShopifyController extends Controller
     public function createWebhook()
     {
         $topics = [
-            'topic' => [
+            '0' => [
                 'nameTopic' => 'products/create',
                 'address' => 'https://b7b4-113-161-32-170.ap.ngrok.io/api/createProductOnShopify'
             ],
-            'topic' => [
+            '1' => [
                 'nameTopic' => 'products/update',
                 'address' => 'https://b7b4-113-161-32-170.ap.ngrok.io/api/updateProductOnShopify'
             ],
-            ' topic' => [
+            '2' => [
                 'nameTopic' => 'products/delete',
                 'address' => 'https://b7b4-113-161-32-170.ap.ngrok.io/api/deleteProductOnShopify'
             ]
         ];
 
-        foreach ($topics as $value) {
-
+        foreach ($topics as $key => $value) {
             $client = new Client();
 
             $url = 'https://manh-store123.myshopify.com/admin/api/2022-07/webhooks.json';
@@ -150,13 +149,14 @@ class ShopifyController extends Controller
                 ],
                 'form_params' => [
                     'webhook' => [
-                        'topic' => $value['nameTopic'],
+                        'topic' => $topics[$key]['nameTopic'],
                         'format' => 'json',
-                        'address' => $value['address'],
+                        'address' => $topics[$key]['address'],
                     ],
                 ]
             ]);
         }
+        return redirect()->back();
     }
 
     //Create products on Shopify, (Queue)
@@ -268,7 +268,7 @@ class ShopifyController extends Controller
             'title' => $request->input('title'),
             'status' => $request->input('status'),
         ];
-        
+
         $url = 'https://manh-store123.myshopify.com/admin/api/2022-07/products/' . $id . '.json';
         $client->request('PUT', $url, [
             'headers' => [
@@ -326,8 +326,7 @@ class ShopifyController extends Controller
         ]);
 
         $data = (array)json_decode($response->getBody());
-        
+
         return redirect()->route('shopifyName');
-        
     }
 }

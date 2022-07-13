@@ -15,5 +15,6 @@ class Productlist extends Model
         'title',
         'handle',
         'status',
+        'image',
     ];
 }
