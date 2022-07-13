@@ -170,7 +170,7 @@ class ShopifyController extends Controller
     public function updateProduct()
     {
         $client = new Client();
-        
+
         $url = 'https://manh-store123.myshopify.com/admin/api/2022-07/webhooks.json';
         $client->request('POST', $url, [
             'headers' => [
@@ -286,7 +286,9 @@ class ShopifyController extends Controller
 
     public function createShopify()
     {
-        return view('shopify.create',[
+        return view(
+            'shopify.create',
+            [
                 'currentPage' => 'shopify'
             ]
         );
@@ -295,29 +297,33 @@ class ShopifyController extends Controller
     //create products on local
     public function createProductLocal(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'body_html' => 'required',
-            'handle' =>  'required',
-            'title' =>  'required',
-            'status' => 'required',
+        $data = [
+            'body_html' => $request->input('body_html'),
+            'handle' => $request->input('handle'),
+            'title' => $request->input('title'),
+            'status' => $request->input('status'),
+        ];
+
+        $client = new Client();
+        $url = 'https://manh-store123.myshopify.com/admin/api/2022-07/products.json';
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'X-Shopify-Access-Token' => 'shpua_feb8882df2b643e3290aa807f7086636',
+            ],
+            'query' => [
+                'product' => [
+                    'title' => $data['title'],
+                    'handle' => $data['handle'],
+                    // 'status' => $data['status'],
+                    'body_html' => $data['body_html'],
+                ]
+            ]
         ]);
 
-        if ($validator->fails()) {
-            session()->flash('error', 'Please enter the correct fields');
-
-            return redirect()->back();
-        }
+        $data = (array)json_decode($response->getBody());
         
-        DB::table('productslist')->insert(
-            [
-                'body_html' => $request->input('body_html'),
-                'handle' => $request->input('handle'),
-                'title' => $request->input('title'),
-                'status' => $request->input('status'),
-                'status' => $request->input('status'),
-            ]
-        );
-
         return redirect()->route('shopifyName');
+        
     }
 }
