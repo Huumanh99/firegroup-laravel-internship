@@ -68,6 +68,39 @@ $(document).ready(function () {
         }
     });
 
+    //create products shopify
+    $("#createShopify").validate({
+        rules: {
+            body_html: {
+                required: true,
+                maxlength: 20
+            },
+            title: {
+                required: true,
+                maxlength: 30
+            },
+            handle: {
+                required: true,
+                maxlength: 50
+        },
+        },
+        messages: {
+
+            body_html: {
+                required: "body_html is required",
+                maxlength: "body_html cannot be more than 20 characters"
+            },
+            title: {
+                required: "title is required",
+                maxlength: "title cannot be more than 30 characters"
+            },
+            handle: {
+                required: "handle is required",
+                maxlength: "handle cannot be more than 50 characters",
+            },
+        }
+    });
+
     //Listuser
     $("input#searchName").on('blur keyup', function () {
         console.log($(this).val());

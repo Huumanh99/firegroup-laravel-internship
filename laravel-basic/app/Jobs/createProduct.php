@@ -35,7 +35,7 @@ class createProduct implements ShouldQueue
     {
         $product = $this->request;
 
-        if ($product['image'] == null) {
+        if ($product['image'] === null) {
            $data = $this->image($product);
         } else {
           $dataImgae = $this->image($product);

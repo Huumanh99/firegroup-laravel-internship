@@ -37,7 +37,7 @@
         <td>{{ $product->title }}</td>
         <td>{{ $product->handle }}</td>
         <td>{{ $product->status }} </td>   
-        <td><img width="10px" src="{{$product->image }}" alt="{{ $product->image }}"> </td>
+        <td><img width="50px" height="50px" src="{{$product->image }}" alt="{{ $product->image }}"> </td>
         <td><a href="/shopify/edit/{{ $product->id }}">Edit</a> | <a
             href="/api/shopify/delete/{{ $product->id }}">Delete</a>
         </td>

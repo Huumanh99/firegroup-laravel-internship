@@ -6,26 +6,26 @@
 
 <h2>Create product</h2>
 @if(Session::has('error'))
-  <div class="alert alert-danger" id='error'>{{Session::get('error') }}</div>
+  <div class="alert alert-success" id='error'>{{Session::get('error') }}</div>
 @endif
-<form action="/shopify/createProductLocal" method="post" enctype="multipart/form-data" class="form-horizontal" id="create-product">
+<form action="/shopify/createProductLocal" method="post" enctype="multipart/form-data" class="form-horizontal" id="createShopify">
   {{ csrf_field()}}
   <div class="form-group">
     <label class="control-label col-sm-2" for="body_html">Body_html<span class="text-danger">(*)</span>:</label>
     <div class="col-sm-6">
-      <input type="text" name="body_html" class="form-control" placeholder="">
+      <input type="text" name="body_html" class="form-control" placeholder="" required id = "body_html">
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-sm-2" for="title">Title<span class="text-danger">(*)</span>:</label>
     <div class="col-sm-6">
-      <input type="text" name="title" class="form-control">
+      <input type="text" name="title" class="form-control" required id = "title">
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-sm-2" for="handle">Handle <span class="text-danger">(*)</span>:</label>
     <div class="col-sm-6">
-      <textarea rows="4" cols="50" class="form-control" name="handle"></textarea>
+      <textarea rows="4" cols="50" class="form-control" name="handle" required id="handle"></textarea>
     </div>
   </div>
   <div class="form-group">
