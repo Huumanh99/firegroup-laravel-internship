@@ -99,7 +99,6 @@ class ShopifyController extends Controller
         ]);
 
         $data = (array)json_decode($resShop->getBody()->getContents());
-
         foreach ($data['products'] as $item) {
             if (empty(Productlist::find($item->id))) {
                 $dataProduct = [
@@ -108,9 +107,8 @@ class ShopifyController extends Controller
                     'title' => $item->title,
                     'handle' => $item->handle,
                     'status' => $item->status,
-                    'image' =>  $item->image,
+                    'image' =>  $item->image->src,
                 ];
-
                 Productlist::create($dataProduct);
             }
         }
@@ -265,50 +263,63 @@ class ShopifyController extends Controller
     {
         $client = new Client();
 
-        $data = [
-            'body_html' => $request->input('body_html'),
-            'handle' => $request->input('handle'),
-            'title' => $request->input('title'),
-            'status' => $request->input('status'),
-            'image' => $request->image,
-        ];
-        
+        $product = Productlist::find($id);
+        $productImage = $product->image;
 
-        $url = 'https://manh-store123.myshopify.com/admin/api/2022-07/products/' . $id . '.json';
-        $getalldata = $client->request('PUT', $url, [
-            'headers' => [
-                'X-Shopify-Access-Token' => 'shpua_feb8882df2b643e3290aa807f7086636',
-            ],
-            'query' => [
-                'product' => [
-                    'title' => $data['title'],
-                    'handle' => $data['handle'],
-                    'image' => $request->image,
-                    'body_html' => $data['body_html'],
-                ],
-            ]
-        ]);
-
-        $image = $data['image'];
-        
-        $getDataUpdate = (array)json_decode($getalldata->getBody()->getContents());
-
-        $id = $getDataUpdate['product']->id;
-        $image_id = $getDataUpdate['product']->image->id;
-
-        $urlProductImage = 'https://manh-store123.myshopify.com/admin/api/2022-07/products/' . $id . '/images/' . $image_id . '.json';
-        $client->request('PUT', $urlProductImage, [
+        $urlProductImage = 'https://manh-store123.myshopify.com/admin/api/2022-07/products/' . $id . '.json';
+        $getProductImage =   $client->request('get', $urlProductImage, [
             'headers' => [
                 'X-Shopify-Access-Token' => 'shpua_feb8882df2b643e3290aa807f7086636',
                 'Content-Type' => 'application/json',
-            ],
-            'json' => [
-                'image' => [
-                    'attachment' => base64_encode(file_get_contents($image)),
-                    'filename' => $image->getClientOriginalName()
-                ],
             ]
         ]);
+
+        $temp = ((array)json_decode($getProductImage->getBody()->getContents()));
+        $product_id = $temp['product']->id;
+
+        $image_id = $temp['product']->image->id;
+
+        if (!is_null($temp['product']->image->id)) {
+
+            $imageURL = $request->image;
+
+            $urlProductImage = 'https://manh-store123.myshopify.com/admin/api/2022-07/products/'.$product_id.'/images/'.$image_id.'.json';
+           $a = $client->request('PUT', $urlProductImage, [
+                'headers' => [
+                    'X-Shopify-Access-Token' => 'shpua_feb8882df2b643e3290aa807f7086636',
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => [
+                    'image' => [
+                        'attachment' => base64_encode(file_get_contents($imageURL)),
+                        'filename' =>  $imageURL->getClientOriginalName(),
+                    ]
+                ]
+            ]);
+           $b = (array)json_decode($a->getBody());
+           Productlist::where('id',$b['image']->id)->update([
+            'image' => $b['image']->src,
+           ]);
+        } else {
+            $imageURL = $request->image;
+
+            $urlProductImage = 'https://manh-store123.myshopify.com/admin/api/2022-07/products/'.$id.'/images.json';
+            $getImage = $client->request('POST', $urlProductImage, [
+                'headers' => [
+                    'X-Shopify-Access-Token' => 'shpua_feb8882df2b643e3290aa807f7086636',
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => [
+                    'image' => [
+                        'attachment' => base64_encode(file_get_contents($imageURL)),
+                        'filename' => $imageURL->getClientOriginalName(),
+                    ]
+                ]
+            ]);
+            
+           
+        }
+
         // Redirect to tasks url
         return redirect()->route('shopifyName');
     }
@@ -360,7 +371,7 @@ class ShopifyController extends Controller
                 'query' => [
                     'product' => [
                         'title' => $data['title'],
-                        'handle' => $data['handle'], 
+                        'handle' => $data['handle'],
                         'body_html' => $data['body_html'],
                     ]
                 ],
