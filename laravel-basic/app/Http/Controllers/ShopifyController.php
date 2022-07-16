@@ -126,15 +126,15 @@ class ShopifyController extends Controller
         $topics = [
             '0' => [
                 'nameTopic' => 'products/create',
-                'address' => 'https://0211-113-161-32-170.ap.ngrok.io/api/createProductOnShopify'
+                'address' => 'https://196e-171-248-122-208.ap.ngrok.io/api/createProductOnShopify'
             ],
             '1' => [
                 'nameTopic' => 'products/update',
-                'address' => 'https://0211-113-161-32-170.ap.ngrok.io/api/updateProductOnShopify'
+                'address' => 'https://196e-171-248-122-208.ap.ngrok.io/api/updateProductOnShopify'
             ],
             '2' => [
                 'nameTopic' => 'products/delete',
-                'address' => 'https://0211-113-161-32-170.ap.ngrok.io/api/deleteProductOnShopify'
+                'address' => 'https://196e-171-248-122-208.ap.ngrok.io/api/deleteProductOnShopify'
             ]
         ];
 
@@ -181,7 +181,7 @@ class ShopifyController extends Controller
                 'webhook' => [
                     'topic' => 'products/update',
                     'format' => 'json',
-                    'address' => 'https://0211-113-161-32-170.ap.ngrok.io/api/updateProductOnShopify',
+                    'address' => 'https://196e-171-248-122-208.ap.ngrok.io/api/updateProductOnShopify',
                 ],
             ]
         ]);
@@ -212,7 +212,7 @@ class ShopifyController extends Controller
                 'webhook' => [
                     'topic' => 'products/delete',
                     'format' => 'json',
-                    'address' => 'https://0211-113-161-32-170.ap.ngrok.io/api/deleteProductOnShopify',
+                    'address' => 'https://196e-171-248-122-208.ap.ngrok.io/api/deleteProductOnShopify',
                 ],
             ]
         ]);
@@ -279,12 +279,10 @@ class ShopifyController extends Controller
 
         $image_id = $temp['product']->image->id;
 
-        if (!is_null($temp['product']->image->id)) {
-
+        if ($_FILES['image']['name'] != "") {
             $imageURL = $request->image;
-
-            $urlProductImage = 'https://manh-store123.myshopify.com/admin/api/2022-07/products/'.$product_id.'/images/'.$image_id.'.json';
-           $a = $client->request('PUT', $urlProductImage, [
+            $urlProductImage = 'https://manh-store123.myshopify.com/admin/api/2022-07/products/' . $product_id . '/images/' . $image_id . '.json';
+            $dataImage = $client->request('PUT', $urlProductImage, [
                 'headers' => [
                     'X-Shopify-Access-Token' => 'shpua_feb8882df2b643e3290aa807f7086636',
                     'Content-Type' => 'application/json',
@@ -296,28 +294,11 @@ class ShopifyController extends Controller
                     ]
                 ]
             ]);
-           $b = (array)json_decode($a->getBody());
-           Productlist::where('id',$b['image']->id)->update([
-            'image' => $b['image']->src,
-           ]);
-        } else {
-            $imageURL = $request->image;
+            $response = (array)json_decode($dataImage->getBody());
 
-            $urlProductImage = 'https://manh-store123.myshopify.com/admin/api/2022-07/products/'.$id.'/images.json';
-            $getImage = $client->request('POST', $urlProductImage, [
-                'headers' => [
-                    'X-Shopify-Access-Token' => 'shpua_feb8882df2b643e3290aa807f7086636',
-                    'Content-Type' => 'application/json',
-                ],
-                'json' => [
-                    'image' => [
-                        'attachment' => base64_encode(file_get_contents($imageURL)),
-                        'filename' => $imageURL->getClientOriginalName(),
-                    ]
-                ]
+            Productlist::where('id', $response['image']->product_id)->update([
+                'image' => $response['image']->src,
             ]);
-            
-           
         }
 
         // Redirect to tasks url
