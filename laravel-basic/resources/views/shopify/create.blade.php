@@ -6,7 +6,7 @@
 
 <h2>Create product</h2>
 @if(Session::has('error'))
-  <div class="alert alert-success" id='error'>{{Session::get('error') }}</div>
+  <div class="alert alert-danger" id='error'>{{Session::get('error') }}</div>
 @endif
 <form action="/shopify/createProductLocal" method="post" enctype="multipart/form-data" class="form-horizontal" id="createShopify">
   {{ csrf_field()}}

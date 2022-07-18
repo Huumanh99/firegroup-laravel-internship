@@ -18,7 +18,7 @@ class CreateProductslistTable extends Migration
             $table->string('body_html');
             $table->string('title');
             $table->string('handle');
-            $table->string('status');
+            $table->enum('status', ['Active', 'Is_Active']);
             $table->string('image')->nullable();
             $table->timestamps();
         });

@@ -101,14 +101,25 @@ class ShopifyController extends Controller
         $data = (array)json_decode($resShop->getBody()->getContents());
         foreach ($data['products'] as $item) {
             if (empty(Productlist::find($item->id))) {
-                $dataProduct = [
-                    'id' =>   $item->id,
-                    'body_html' => $item->body_html,
-                    'title' => $item->title,
-                    'handle' => $item->handle,
-                    'status' => $item->status,
-                    'image' =>  $item->image->src,
-                ];
+                if (isset($item->image->src)) {
+                    $dataProduct = [
+                        'id' =>   $item->id,
+                        'body_html' => $item->body_html,
+                        'title' => $item->title,
+                        'handle' => $item->handle,
+                        'status' => $item->status,
+                        'image' =>  $item->image->src,
+                    ];
+                } else {
+                    $dataProduct = [
+                        'id' =>   $item->id,
+                        'body_html' => $item->body_html,
+                        'title' => $item->title,
+                        'handle' => $item->handle,
+                        'status' => $item->status,
+                    ];
+                }
+
                 Productlist::create($dataProduct);
             }
         }
@@ -126,15 +137,15 @@ class ShopifyController extends Controller
         $topics = [
             '0' => [
                 'nameTopic' => 'products/create',
-                'address' => 'https://196e-171-248-122-208.ap.ngrok.io/api/createProductOnShopify'
+                'address' => 'https://1a3f-113-161-32-170.ap.ngrok.io/api/createProductOnShopify'
             ],
             '1' => [
                 'nameTopic' => 'products/update',
-                'address' => 'https://196e-171-248-122-208.ap.ngrok.io/api/updateProductOnShopify'
+                'address' => 'https://1a3f-113-161-32-170.ap.ngrok.io/api/updateProductOnShopify'
             ],
             '2' => [
                 'nameTopic' => 'products/delete',
-                'address' => 'https://196e-171-248-122-208.ap.ngrok.io/api/deleteProductOnShopify'
+                'address' => 'https://1a3f-113-161-32-170.ap.ngrok.io/api/deleteProductOnShopify'
             ]
         ];
 
@@ -181,7 +192,7 @@ class ShopifyController extends Controller
                 'webhook' => [
                     'topic' => 'products/update',
                     'format' => 'json',
-                    'address' => 'https://196e-171-248-122-208.ap.ngrok.io/api/updateProductOnShopify',
+                    'address' => 'https://1a3f-113-161-32-170.ap.ngrok.io/api/updateProductOnShopify',
                 ],
             ]
         ]);
@@ -196,6 +207,8 @@ class ShopifyController extends Controller
             'title' =>  $request->input('title'),
             'handle' =>  $request->input('handle'),
             'status' =>  $request->input('status'),
+            // 'image' =>  $request->image,
+
         ]);
     }
 
@@ -212,7 +225,7 @@ class ShopifyController extends Controller
                 'webhook' => [
                     'topic' => 'products/delete',
                     'format' => 'json',
-                    'address' => 'https://196e-171-248-122-208.ap.ngrok.io/api/deleteProductOnShopify',
+                    'address' => 'https://1a3f-113-161-32-170.ap.ngrok.io/api/deleteProductOnShopify',
                 ],
             ]
         ]);
@@ -325,10 +338,10 @@ class ShopifyController extends Controller
             'handle' => 'required',
             'title' => 'required',
             'status' => 'required',
+            'image' => 'required',
         ]);
 
         if ($data->fails()) {
-
             session()->flash('error', 'Please enter the correct fields');
 
             return redirect()->back();
