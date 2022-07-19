@@ -1,0 +1,12 @@
+
+GET http://localhost:8000/api/register
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9hZG1pblwvbG9naW4iLCJpYXQiOjE2NTgyMjUyMjMsImV4cCI6MTY1ODIyNTI4MywibmJmIjoxNjU4MjI1MjIzLCJqdGkiOiJrTFh0TXhORVk3OVdIczJiIiwic3ViIjo1OCwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.g6nxbxxqQisNv8_7lC4J27bzBqzl-40CgQtIIuvE6tc
+
+###
+POST http://localhost:8000/api/auth/admin/login
+Content-Type: application/json
+
+{
+    "email": "abc@gmail.com",
+    "password": "123456"
+}

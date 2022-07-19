@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 
 class ShopifyController extends Controller
@@ -390,4 +391,5 @@ class ShopifyController extends Controller
         }
         return redirect()->back();
     }
+
 }
